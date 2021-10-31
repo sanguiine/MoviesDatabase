@@ -1,11 +1,12 @@
 # Movies Database
-![Site design](./Images/movie.png)
+![App design](./Images/movie.png)
 
 
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Features](#features)
+* [Database](#database)
 * [Setup](#setup)
 
 
@@ -25,6 +26,10 @@ Project was created with:
 * manage movie rates
 * keep track of movies you want to see
 * search for new movies to watch
+
+
+## Database
+![Database schema](./Images/database.png)
 
 
 ## Setup
