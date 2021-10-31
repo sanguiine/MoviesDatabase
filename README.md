@@ -22,9 +22,9 @@ Project was created with:
 
 
 ## Features
-* manage movie rates,
-* keep track of the movies you want to see,
-* search for new movies
+* manage movie rates
+* keep track of movies you want to see
+* search for new movies to watch
 
 
 ## Setup
