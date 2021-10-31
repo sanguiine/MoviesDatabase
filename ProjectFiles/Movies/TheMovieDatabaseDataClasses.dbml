@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TheMovieDatabase" Class="TheMovieDatabaseDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\TheMovieDatabase.mdf;Integrated Security=True" SettingsObjectName="Movies.Properties.Settings" SettingsPropertyName="TheMovieDatabaseConnectionString2" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CastAndCrew" Member="CastAndCrews">
+    <Type Name="CastAndCrew">
+      <Column Name="PersonID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="CastAndCrew_MovieDirectors" Member="MovieDirectors" ThisKey="PersonID" OtherKey="PersonID" Type="MovieDirectors" />
+      <Association Name="CastAndCrew_MovieWriters" Member="MovieWriters" ThisKey="PersonID" OtherKey="PersonID" Type="MovieWriters" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Genres" Member="Genres">
+    <Type Name="Genres">
+      <Column Name="GenreID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Genres_MovieGenres" Member="MovieGenres" ThisKey="GenreID" OtherKey="GenreID" Type="MovieGenres" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MovieDirectors" Member="MovieDirectors">
+    <Type Name="MovieDirectors">
+      <Column Name="MovieDirectorsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PersonID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="CastAndCrew_MovieDirectors" Member="CastAndCrew" ThisKey="PersonID" OtherKey="PersonID" Type="CastAndCrew" IsForeignKey="true" />
+      <Association Name="Movies_MovieDirectors" Member="Movies" ThisKey="MovieID" OtherKey="MovieID" Type="Movies" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MovieGenres" Member="MovieGenres">
+    <Type Name="MovieGenres">
+      <Column Name="MovieGenresID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GenreID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Genres_MovieGenres" Member="Genres" ThisKey="GenreID" OtherKey="GenreID" Type="Genres" IsForeignKey="true" />
+      <Association Name="Movies_MovieGenres" Member="Movies" ThisKey="MovieID" OtherKey="MovieID" Type="Movies" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Movies" Member="Movies">
+    <Type Name="Movies">
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ReleaseDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Runtime" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="Overview" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Cover" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Movies_MovieDirectors" Member="MovieDirectors" ThisKey="MovieID" OtherKey="MovieID" Type="MovieDirectors" />
+      <Association Name="Movies_MovieGenres" Member="MovieGenres" ThisKey="MovieID" OtherKey="MovieID" Type="MovieGenres" />
+      <Association Name="Movies_MovieWriters" Member="MovieWriters" ThisKey="MovieID" OtherKey="MovieID" Type="MovieWriters" />
+      <Association Name="Movies_Ratings" Member="Ratings" ThisKey="MovieID" OtherKey="MovieID" Type="Ratings" />
+      <Association Name="Movies_WantToSee" Member="WantToSees" ThisKey="MovieID" OtherKey="MovieID" Type="WantToSee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MovieWriters" Member="MovieWriters">
+    <Type Name="MovieWriters">
+      <Column Name="MovieWritersID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PersonID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="CastAndCrew_MovieWriters" Member="CastAndCrew" ThisKey="PersonID" OtherKey="PersonID" Type="CastAndCrew" IsForeignKey="true" />
+      <Association Name="Movies_MovieWriters" Member="Movies" ThisKey="MovieID" OtherKey="MovieID" Type="Movies" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Ratings" Member="Ratings">
+    <Type Name="Ratings">
+      <Column Name="MovieRatingsID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Rate" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Movies_Ratings" Member="Movies" ThisKey="MovieID" OtherKey="MovieID" Type="Movies" IsForeignKey="true" />
+      <Association Name="Users_Ratings" Member="Users" ThisKey="UserID" OtherKey="UserID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WantToSee" Member="WantToSees">
+    <Type Name="WantToSee">
+      <Column Name="WantToSeeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Movies_WantToSee" Member="Movies" ThisKey="MovieID" OtherKey="MovieID" Type="Movies" IsForeignKey="true" />
+      <Association Name="Users_WantToSee" Member="Users" ThisKey="UserID" OtherKey="UserID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="Users">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="UserType" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Users_Ratings" Member="Ratings" ThisKey="UserID" OtherKey="UserID" Type="Ratings" />
+      <Association Name="Users_WantToSee" Member="WantToSees" ThisKey="UserID" OtherKey="UserID" Type="WantToSee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Top10Movies" Member="Top10Movies">
+    <Type Name="Top10Movies">
+      <Column Name="Title" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Average" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.funMovieRate" Method="funMovieRate" IsComposable="true">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Double" />
+  </Function>
+  <Function Name="dbo.uspMovieByGenre" Method="uspMovieByGenre">
+    <Parameter Name="genre" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="uspMovieByGenreResult">
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>
