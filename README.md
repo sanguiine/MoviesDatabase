@@ -1,5 +1,5 @@
 # Movies Database
-![Site design](./images/movie.png)
+![Site design](./Images/movie.png)
 
 
 ## Table of contents
